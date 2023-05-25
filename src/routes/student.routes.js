@@ -5,6 +5,8 @@ import StudentSchema from "../schemas/students.schema.js";
 
 const StudentsRouter = Router();
 
-StudentsRouter.post('/register', validateSchema(StudentSchema), StudentsController.insertOneUser);
+StudentsRouter.post('/register', validateSchema(StudentSchema), StudentsController.insertOneStudent);
+StudentsRouter.get('/list', StudentsController.listStudents);
+StudentsRouter.get('/list/:id', StudentsController.listOneStudent);
 
 export default StudentsRouter;

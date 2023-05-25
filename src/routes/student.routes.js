@@ -1,7 +1,10 @@
-import { Router} from "express"
+import { Router } from "express";
+import StudentsController from "../controllers/students.controller.js";
+import { validateSchema } from "../middlewares/schema.middleware.js";
+import StudentSchema from "../schemas/students.schema.js";
 
-const StudentsRouter = Router()
+const StudentsRouter = Router();
 
-StudentsRouter.post('/register')
+StudentsRouter.post('/register', validateSchema(StudentSchema), StudentsController.insertOneUser);
 
-export default StudentsRouter
+export default StudentsRouter;

@@ -17,7 +17,9 @@ const StudentSchema = Joi.object({
         .messages({
             'any.required': 'A foto é requerida'
         }),
-    turma: Joi.number().required()
+    turma: Joi.number().required(),
+    estudante: Joi.number().allow("").optional()
 });
+
 
 export default StudentSchema;

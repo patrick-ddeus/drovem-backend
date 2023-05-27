@@ -46,8 +46,26 @@ const listOneStudent = async (req, res) => {
     }
 };
 
+const updateStudent = async (req, res) => {
+    const { nome, email, cpf, foto, turma, estudante } = sanitizeObjects(req.body);
+    try {
+        const { rows: [matricula] } = await EnrollmentRepository.listEnrollmentByStudentId(estudante);
+
+        if (matricula.id_turma !== turma) {
+            await EnrollmentRepository.create({ turmaId: turma, estudanteId: estudante });
+            await EnrollmentRepository.updateStudentClass(matricula.id);
+        }
+
+        await StudentsRepository.updateStudent({ nome, email, cpf, foto, estudante });
+        res.sendStatus(200);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export default {
     insertOneStudent,
     listStudents,
-    listOneStudent
+    listOneStudent,
+    updateStudent
 };

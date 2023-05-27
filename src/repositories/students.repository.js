@@ -3,7 +3,7 @@ import { db } from "../database/connect.js";
 class StudentRepository {
     create(reqParams) {
         const { nome, cpf, email, foto } = reqParams;
-        
+
         const query = `
         INSERT 
         INTO estudantes (nome, cpf, email, foto) 
@@ -37,6 +37,16 @@ class StudentRepository {
         WHERE estudantes.id = $1
         GROUP BY estudantes.id`;
         return db.query(query, [id]);
+    }
+
+    updateStudent(reqParams) {
+        const { estudante, nome, foto, cpf, email } = reqParams;
+        const query = `
+        UPDATE 
+        estudantes 
+        SET nome = $1, foto = $2, cpf = $3, email = $4 WHERE id = $5
+        `;
+        return db.query(query, [nome, foto, cpf, email, estudante]);
     }
 
 }

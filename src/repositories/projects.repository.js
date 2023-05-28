@@ -25,19 +25,20 @@ class ProjectRepository {
     listDoneProjects(projeto, turma) {
         const params = [];
         let query = `
-            SELECT e.nome, e.foto, etr.nota FROM
+            SELECT etr.id ,p.nome as nome_projeto, e.nome, e.foto, etr.nota FROM
             estudantes e 
             JOIN entregas etr ON e.id = etr.id_estudante
+            JOIN projetos p ON p.id = etr.id_projeto
             WHERE TRUE
         `;
 
         if (projeto) {
-            query += ` AND etr.id_projeto = $1`;
+            query += ` AND etr.id_projeto = $${params.length + 1}`;
             params.push(`${projeto}`);
         }
 
         if (turma) {
-            query += ` AND etr.id_turma = $2`;
+            query += ` AND etr.id_turma = $${params.length + 1}`;
             params.push(`${turma}`);
         }
 
@@ -48,6 +49,14 @@ class ProjectRepository {
         const query = `
         SELECT p.* FROM projetos p;`;
         return db.query(query);
+    }
+
+    updateGrade(reqParams) {
+        const { nota, id } = reqParams;
+        const query = `
+            UPDATE entregas SET nota = $1 WHERE id = $2
+        `;
+        return db.query(query, [nota, id]);
     }
 }
 

@@ -50,9 +50,20 @@ const listProjects = async (req, res) => {
     }
 };
 
+const updateGrade = async (req, res) => {
+    const { nota, id } = req.body;
+    try {
+        await ProjectRepository.updateGrade({ nota, id });
+        res.sendStatus(200)
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export default {
     sendProject,
     listDoneProjects,
     createProject,
-    listProjects
+    listProjects,
+    updateGrade
 };

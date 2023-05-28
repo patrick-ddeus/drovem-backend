@@ -1,7 +1,7 @@
 import { db } from "../database/connect.js";
 
 class ProjectRepository {
-    
+
     create(reqParams) {
         const { name } = reqParams;
         const query = `
@@ -22,7 +22,7 @@ class ProjectRepository {
         return db.query(query, [estudanteId, projetoId, "entregue", linkProjeto, turmaId]);
     }
 
-    list(projeto, turma) {
+    listDoneProjects(projeto, turma) {
         const params = [];
         let query = `
             SELECT e.nome, e.foto, etr.nota FROM
@@ -42,6 +42,12 @@ class ProjectRepository {
         }
 
         return db.query(query, params);
+    }
+
+    list() {
+        const query = `
+        SELECT p.* FROM projetos p;`;
+        return db.query(query);
     }
 }
 

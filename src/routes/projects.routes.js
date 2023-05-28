@@ -7,6 +7,7 @@ const ProjectsRouter = Router();
 
 ProjectsRouter.post('/send', validateSchema(SendProjectSchema), ProjectsController.sendProject);
 ProjectsRouter.post('/', validateSchema(ProjectSchema), ProjectsController.createProject);
-ProjectsRouter.get('/', ProjectsController.listProjects);
+ProjectsRouter.get('/list', ProjectsController.listProjects);
+ProjectsRouter.get('/list/done', ProjectsController.listDoneProjects);
 
 export default ProjectsRouter;

@@ -18,11 +18,11 @@ const sendProject = async (req, res) => {
     }
 };
 
-const listProjects = async (req, res) => {
+const listDoneProjects = async (req, res) => {
     const { projeto, turma } = sanitizeObjects(req.query);
 
     try {
-        const { rows } = await ProjectRepository.list(projeto, turma);
+        const { rows } = await ProjectRepository.listDoneProjects(projeto, turma);
 
         res.status(200).json(rows);
     } catch (error) {
@@ -40,9 +40,19 @@ const createProject = async (req, res) => {
     }
 };
 
+const listProjects = async (req, res) => {
+    try {
+        const { rows } = await ProjectRepository.list();
+
+        res.status(200).json(rows);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 export default {
     sendProject,
-    listProjects,
-    createProject
+    listDoneProjects,
+    createProject,
+    listProjects
 };

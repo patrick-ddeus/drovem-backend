@@ -30,6 +30,7 @@ class ProjectRepository {
             JOIN entregas etr ON e.id = etr.id_estudante
             JOIN projetos p ON p.id = etr.id_projeto
             WHERE TRUE
+            ORDER BY e.nome
         `;
 
         if (projeto) {

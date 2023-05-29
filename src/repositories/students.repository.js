@@ -25,12 +25,19 @@ class StudentRepository {
             query += ` AND m.id_turma = $1`;
             params.push(`${studentClass}`);
         }
+
+        query += ` ORDER BY e.nome`
         return db.query(query, params);
     }
 
     listOneStudentById(id) {
         const query = `
-        SELECT estudantes.*, JSON_AGG(JSON_BUILD_OBJECT('nome_turma', turmas.nome, 'data_ingresso', matriculas.data_ingresso, 'data_saida', matriculas.data_saida)) AS turmas
+        SELECT estudantes.*, JSON_AGG(JSON_BUILD_OBJECT(
+            'id', turmas.id, 
+            'nome_turma', turmas.nome, 
+            'data_ingresso', matriculas.data_ingresso, 
+            'data_saida', matriculas.data_saida) ORDER BY data_ingresso DESC) 
+        AS turmas
         FROM estudantes
         JOIN matriculas ON estudantes.id = matriculas.id_estudante
         JOIN turmas ON matriculas.id_turma = turmas.id

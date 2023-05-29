@@ -13,5 +13,5 @@ export const ProjectSchema = Joi.object({
 
 export const GradesSchema = Joi.object({
     id: Joi.number().required(),
-    nota: Joi.string().valid('abaixo das expectativas', 'dentro das expectativas', 'acima das expectativas').required()
+    nota: Joi.string().valid('sem nota', 'abaixo das expectativas', 'dentro das expectativas', 'acima das expectativas').required()
 });

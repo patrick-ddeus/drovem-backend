@@ -9,6 +9,16 @@ const getAllClasses = async (req, res) => {
     }
 };
 
+const createClass = async (req, res) => {
+    const { name } = sanitizeObjects(req.body);
+create
+    try {
+        await ClassesRepository.create({ name });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 const getClassesByStudentId = async (req, res) => {
     const { id } = req.params;
     try {
@@ -21,5 +31,6 @@ const getClassesByStudentId = async (req, res) => {
 
 export default {
     getAllClasses,
-    getClassesByStudentId
+    getClassesByStudentId,
+    createClass
 };

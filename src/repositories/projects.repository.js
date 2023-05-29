@@ -30,7 +30,6 @@ class ProjectRepository {
             JOIN entregas etr ON e.id = etr.id_estudante
             JOIN projetos p ON p.id = etr.id_projeto
             WHERE TRUE
-            ORDER BY e.nome
         `;
 
         if (projeto) {
@@ -42,6 +41,8 @@ class ProjectRepository {
             query += ` AND etr.id_turma = $${params.length + 1}`;
             params.push(`${turma}`);
         }
+
+        query += ` ORDER BY e.nome`
 
         return db.query(query, params);
     }

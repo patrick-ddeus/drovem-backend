@@ -26,7 +26,8 @@ class StudentRepository {
             params.push(`${studentClass}`);
         }
 
-        query += ` ORDER BY e.nome`
+        query += ` GROUP BY e.id`
+        query += ` ORDER BY e.nome`;
         return db.query(query, params);
     }
 
